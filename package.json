@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Show your website metrics in a pinned gist for your GitHub profile",
   "scripts": {
-    "build": "tsc src/index.ts --outDir dist",
+    "build": "rimraf dist/ && tsc src/index.ts --outDir dist",
     "lint": "eslint src/ --ext .ts --fix"
   },
   "keywords": [
