@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Show your website metrics in a pinned gist for your GitHub profile",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc src/index.ts --outDir dist",
     "lint": "eslint src/ --ext .ts --fix"
   },
   "keywords": [
@@ -26,7 +26,6 @@
     "@types/node-fetch": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
-    "@vercel/ncc": "^0.34.0",
     "eslint": "^8.16.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",

@@ -1,9 +1,9 @@
-const lighthouse = require('lighthouse');
-const chromeLauncher = require('chrome-launcher');
 import * as core from '@actions/core';
 import {Octokit} from '@octokit/rest';
 import {config} from 'dotenv';
 import {resolve} from 'path';
+const chromeLauncher = require('chrome-launcher');
+const lighthouse = require('lighthouse');
 
 config({path: resolve(__dirname, '../.env')});
 
