@@ -14,10 +14,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm i
+      - run: npm ci
 
       - name: Update gist
         uses: abordage/lighthouse-box@master
+      - run: npm ci
         env:
           INPUT_PRINT_SUMMARY: true
 
