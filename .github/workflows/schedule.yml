@@ -18,7 +18,6 @@ jobs:
 
       - name: Update gist
         uses: abordage/lighthouse-box@master
-        run: npm ci
         env:
           INPUT_PRINT_SUMMARY: true
 
