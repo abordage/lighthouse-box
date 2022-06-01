@@ -45,8 +45,6 @@ const title = 'My website metrics [update ' + updateDate + ']';
       })
       .join('\n');
 
-  summaryTable.push(['Gist updated', '✔']);
-
   /**
    * Get gist filename
    */
@@ -81,7 +79,7 @@ const title = 'My website metrics [update ' + updateDate + ']';
     .addHeading('Results')
     .addTable(summaryTable)
     .addBreak()
-    .addLink('lighthouse-gist', ACTION_URL);
+    .addLink('lighthouse-box', ACTION_URL);
 
   if (PRINT_SUMMARY) {
     await summary.write();

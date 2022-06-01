@@ -1,4 +1,4 @@
-# WIP: Lighthouse metrics in your GitHub profile
+# Lighthouse metrics in your GitHub profile
 
 Automatically update your pinned gist with your site's Lighthouse metrics.
 
@@ -11,6 +11,15 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 
 
 <p style="text-align: center;" align="center">
+
+<a href="https://github.com/abordage" title="language">
+    <img alt="language" src="https://img.shields.io/badge/language-typescript-blue">
+</a>
+
+<a href="https://scrutinizer-ci.com/g/abordage/lighthouse-box/" title="Scrutinizer Quality Score">
+    <img alt="Scrutinizer Quality Score" 
+         src="https://scrutinizer-ci.com/g/abordage/lighthouse-box/badges/quality-score.png?b=master">
+</a>
 
 <a href="https://github.com/abordage/lighthouse-box/blob/master/LICENSE.md" title="License">
     <img alt="License" src="https://img.shields.io/github/license/abordage/lighthouse-box">
@@ -31,12 +40,22 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 5. **Create** new **Environment secrets:**
     - `GH_TOKEN`: GitHub token generated earlier
     - `GIST_ID`: your Gist ID
-    - `URL`: your url 
+    - `URL`: your url
 
 It's all. Go to **Actions** > **Update Gist** and **Run workflow**. Gist should update and show Lighthouse metrics.
 Next, statistics will be updated automatically every day. Pin this gist on your profile!
 
 > Inspired from [awesome pinned-gist project](https://github.com/matchai/awesome-pinned-gists)
+
+## FAQ
+
+#### Why does the repository have node_modules?
+
+1. _From your terminal, commit your action.yml, index.js, node_modules, package.json, package-lock.json, and README.md
+   files. If you added a .gitignore file that lists node_modules, you'll need to remove that line to commit the node_modules
+   directory._ [docs.github.com](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github)
+2. `vercel/ncc` didn't work with `GoogleChrome/lighthouse`
+3. I will try to get rid of it in future releases
 
 ## Feedback
 
