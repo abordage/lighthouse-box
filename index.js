@@ -5,7 +5,7 @@ const { Octokit } = require('@octokit/rest')
 const { config } = require('dotenv')
 const { resolve } = require('path')
 
-config({ path: resolve(__dirname, '../.env') })
+config({ path: resolve(__dirname, '.env') })
 
 const GH_TOKEN = core.getInput('GH_TOKEN', { required: true })
 const GIST_ID = core.getInput('GIST_ID', { required: true })
