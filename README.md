@@ -16,11 +16,6 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
     <img alt="language" src="https://img.shields.io/badge/language-typescript-blue">
 </a>
 
-<a href="https://scrutinizer-ci.com/g/abordage/lighthouse-box/" title="Scrutinizer Quality Score">
-    <img alt="Scrutinizer Quality Score" 
-         src="https://scrutinizer-ci.com/g/abordage/lighthouse-box/badges/quality-score.png?b=master">
-</a>
-
 <a href="https://github.com/abordage/lighthouse-box/blob/master/LICENSE.md" title="License">
     <img alt="License" src="https://img.shields.io/github/license/abordage/lighthouse-box">
 </a>
@@ -51,9 +46,9 @@ Next, statistics will be updated automatically every day. Pin this gist on your 
 
 #### Why does the repository have node_modules?
 
-1. _From your terminal, commit your action.yml, index.js, node_modules, package.json, package-lock.json, and README.md
+1. [docs.github.com](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github): _...commit your action.yml, index.js, **node_modules**, package.json, package-lock.json, and README.md
    files. If you added a .gitignore file that lists node_modules, you'll need to remove that line to commit the node_modules
-   directory._ [docs.github.com](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github)
+   directory._ 
 2. `vercel/ncc` didn't work with `GoogleChrome/lighthouse`
 3. I will try to get rid of it in future releases
 
