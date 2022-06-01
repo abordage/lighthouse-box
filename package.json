@@ -1,0 +1,30 @@
+{
+  "name": "lighthouse-box",
+  "version": "1.0.0",
+  "description": "Show your website metrics in a pinned gist for your GitHub profile",
+  "scripts": {
+    "lint": "eslint src/ --ext .js --fix"
+  },
+  "keywords": [
+    "lighthouse",
+    "website performance",
+    "lighthouse-box",
+    "pinned gist"
+  ],
+  "author": "Pavel Bychko <abordage.dev@gmail.com> (https://abordage.dev)",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.8.2",
+    "@octokit/rest": "^18.12.0",
+    "chrome-launcher": "^0.15.1",
+    "dotenv": "^16.0.1",
+    "lighthouse": "^9.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}

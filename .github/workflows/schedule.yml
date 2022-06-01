@@ -1,0 +1,21 @@
+name: Update Gist
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 3 * * *"
+
+jobs:
+  update-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Update gist
+        uses: abordage/lighthouse-box@master
+        env:
+          INPUT_PRINT_SUMMARY: true
+
+          INPUT_GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          INPUT_GIST_ID: ${{ secrets.GIST_ID }}
+          INPUT_URL: ${{ secrets.URL }}

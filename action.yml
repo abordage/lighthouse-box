@@ -1,0 +1,27 @@
+name: "lighthouse-box"
+author: "abordage"
+description: "Show your website metrics in a pinned gist for your GitHub profile"
+
+inputs:
+  INPUT_GH_TOKEN:
+    description: 'GitHub token'
+    required: true
+
+  INPUT_GIST_ID:
+    description: 'Gist Id'
+    required: true
+
+  INPUT_URL:
+    description: 'Your url'
+    required: true
+
+  INPUT_PRINT_SUMMARY:
+    default: true
+
+runs:
+  using: "node16"
+  main: "src/index.js"
+
+branding:
+  icon: "paperclip"
+  color: "orange"
