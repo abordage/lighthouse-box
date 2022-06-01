@@ -15,13 +15,13 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: node src/index.js
 
-#      - name: Update gist
-#        uses: abordage/lighthouse-box@master
-#        env:
-#          INPUT_PRINT_SUMMARY: true
-#
-#          INPUT_GH_TOKEN: ${{ secrets.GH_TOKEN }}
-#          INPUT_GIST_ID: ${{ secrets.GIST_ID }}
-#          INPUT_URL: ${{ secrets.URL }}
+      - name: Update gist
+        uses: abordage/lighthouse-box@master
+        run: npm ci
+        env:
+          INPUT_PRINT_SUMMARY: true
+
+          INPUT_GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          INPUT_GIST_ID: ${{ secrets.GIST_ID }}
+          INPUT_URL: ${{ secrets.URL }}
