@@ -11,12 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Installing node_modules
-        run: npm install
-
-      - name: Build GitHub Action
-        run: npm run build
-
       - name: Update gist
         uses: abordage/lighthouse-box@master
         env:
