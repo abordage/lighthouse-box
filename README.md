@@ -1,4 +1,4 @@
-# Lighthouse metrics in your GitHub profile
+# WIP: Lighthouse metrics in your GitHub profile
 
 Automatically update your pinned gist with your site's Lighthouse metrics.
 
