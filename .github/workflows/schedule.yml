@@ -15,8 +15,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: node -v
-      - run: npm -v
+      - run: npm audit
 
       - name: Update gist
         uses: abordage/lighthouse-box@master
