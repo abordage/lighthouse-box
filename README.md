@@ -1,4 +1,4 @@
-# WIP: Lighthouse metrics in your GitHub profile
+# Lighthouse metrics in your GitHub profile
 
 Automatically update your pinned gist with your site's Lighthouse metrics.
 
@@ -47,15 +47,6 @@ It's all. Go to **Actions** > **Update Gist** and **Run workflow**. Gist should 
 Next, statistics will be updated automatically every day. Pin this gist on your profile!
 
 > Inspired from [awesome pinned-gist project](https://github.com/matchai/awesome-pinned-gists)
-
-## FAQ
-
-#### Why does the repository have node_modules?
-
-1. [docs.github.com](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github): _...commit your action.yml, index.js, **node_modules**. If you added a .gitignore file that lists node_modules, you'll need to remove that line to **commit the node_modules**
-   directory._ 
-2. `vercel/ncc` [currently](https://github.com/vercel/ncc/issues/290) not working with `GoogleChrome/lighthouse`
-3. I will try to get rid of it in future releases
 
 ## Feedback
 
