@@ -1,6 +1,6 @@
 {
   "name": "lighthouse-box",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Show your website metrics in a pinned gist for your GitHub profile",
   "scripts": {
     "build": "rimraf dist/ && tsc src/index.ts --outDir dist",

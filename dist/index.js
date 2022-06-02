@@ -79,7 +79,6 @@ var title = 'My website metrics [update ' + updateDate + ']';
                     return (content[0] + ':').padEnd(49, '.') + (content[1] + '%').padStart(4, '.');
                 })
                     .join('\n');
-                summaryTable.push(['Gist updated', '✔']);
                 octokit = new rest_1.Octokit({ auth: GH_TOKEN });
                 return [4 /*yield*/, octokit.gists.get({ gist_id: GIST_ID })["catch"](function (error) { return core.setFailed('Action failed: Gist ' + error.message); })];
             case 4:
@@ -112,7 +111,7 @@ var title = 'My website metrics [update ' + updateDate + ']';
                     .addHeading('Results')
                     .addTable(summaryTable)
                     .addBreak()
-                    .addLink('lighthouse-gist', ACTION_URL);
+                    .addLink('lighthouse-box', ACTION_URL);
                 if (!PRINT_SUMMARY) return [3 /*break*/, 7];
                 return [4 /*yield*/, summary.write()];
             case 6:
