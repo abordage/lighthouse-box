@@ -43,7 +43,7 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
     - `GIST_ID`: your Gist ID
     - `URL`: your url
 
-It's all. Go to **Actions** > **Update Gist** and **Run workflow**. Gist should update and show Lighthouse metrics.
+It's all. Go to **Actions** > **Lighthouse Metrics** and **Run workflow**. Gist should update and show Lighthouse metrics.
 Next, statistics will be updated automatically every day. Pin this gist on your profile!
 
 > Inspired from [awesome pinned-gist project](https://github.com/matchai/awesome-pinned-gists)
