@@ -1,4 +1,4 @@
-name: Test
+name: Test1
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         run: |
           npm ci
           ts-node src/index.ts
-        env:
+        with:
           INPUT_PRINT_SUMMARY: true
           INPUT_RESULT_BADGE: false
 
