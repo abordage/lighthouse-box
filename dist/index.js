@@ -47,6 +47,7 @@ var GH_TOKEN = core.getInput('GH_TOKEN', { required: true });
 var GIST_ID = core.getInput('GIST_ID', { required: true });
 var TEST_URL = core.getInput('URL', { required: true });
 var PRINT_SUMMARY = core.getBooleanInput('PRINT_SUMMARY', { required: true });
+var RESULT_BADGE = core.getBooleanInput('RESULT_BADGE', { required: true });
 var ACTION_URL = 'https://github.com/marketplace/actions/lighthouse-box';
 var updateDate = new Date().toLocaleDateString('en-us', { day: 'numeric', year: 'numeric', month: 'short' });
 var summaryTable = [];
@@ -76,7 +77,17 @@ var title = 'My website metrics [update ' + updateDate + ']';
                 ]
                     .map(function (content) {
                     summaryTable.push([content[0], content[1] + '%']);
-                    return (content[0] + ':').padEnd(49, '.') + (content[1] + '%').padStart(4, '.');
+                    var badge = '🙉';
+                    if (content[1] > 80)
+                        badge = '🥈';
+                    if (content[1] > 90)
+                        badge = '🥇';
+                    if (content[1] === 100)
+                        badge = '🏆';
+                    var title = (content[0] + ':').padEnd(RESULT_BADGE ? 37 : 49, '.');
+                    var percent = (content[1] + '%').padStart(4, '.');
+                    var result = RESULT_BADGE ? ' ' + (' ' + badge).padStart(11, '.') : '';
+                    return title + percent + result;
                 })
                     .join('\n');
                 octokit = new rest_1.Octokit({ auth: GH_TOKEN });

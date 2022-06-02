@@ -11,6 +11,7 @@ const GH_TOKEN = core.getInput('GH_TOKEN', {required: true});
 const GIST_ID = core.getInput('GIST_ID', {required: true});
 const TEST_URL = core.getInput('URL', {required: true});
 const PRINT_SUMMARY = core.getBooleanInput('PRINT_SUMMARY', {required: true});
+const RESULT_BADGE = core.getBooleanInput('RESULT_BADGE', {required: true});
 
 const ACTION_URL = 'https://github.com/marketplace/actions/lighthouse-box';
 
@@ -42,7 +43,17 @@ const title = 'My website metrics [update ' + updateDate + ']';
     ]
       .map((content) => {
         summaryTable.push([content[0], content[1] + '%']);
-        return (content[0] + ':').padEnd(49, '.') + (content[1] + '%').padStart(4, '.');
+
+        let badge = '🙉';
+        if (content[1] > 80) badge = '🥈';
+        if (content[1] > 90) badge = '🥇';
+        if (content[1] === 100) badge = '🏆';
+
+        const title = (content[0] + ':').padEnd(RESULT_BADGE ? 37 : 49, '.');
+        const percent = (content[1] + '%').padStart(4, '.');
+        const result = RESULT_BADGE ? ' ' + (' ' + badge).padStart(11, '.') : '';
+
+        return title + percent + result;
       })
       .join('\n');
 

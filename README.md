@@ -16,6 +16,12 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
     <img alt="language" src="https://img.shields.io/badge/language-typescript-blue">
 </a>
 
+<a href="https://scrutinizer-ci.com/g/abordage/lighthouse-box/" title="Scrutinizer Quality Score">
+    <img alt="Scrutinizer Quality Score" 
+         src="https://scrutinizer-ci.com/g/abordage/lighthouse-box/badges/quality-score.png?b=master">
+</a>
+
+
 <a href="https://github.com/abordage/lighthouse-box/blob/master/LICENSE.md" title="License">
     <img alt="License" src="https://img.shields.io/github/license/abordage/lighthouse-box">
 </a>

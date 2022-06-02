@@ -15,6 +15,7 @@ jobs:
         uses: abordage/lighthouse-box@master
         env:
           INPUT_PRINT_SUMMARY: true
+          INPUT_RESULT_BADGE: false
 
           # if you want to hide site url use secret env: ${{ secrets.URL }}
           # or you can enter the URL of the site here
