@@ -1,0 +1,28 @@
+name: Test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 3 * * *"
+
+jobs:
+  update-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔃 Checkout
+      - uses: actions/checkout@v3
+
+      - name: 🛠️ Install and build
+        run: |
+          npm ci
+          ts-node src/index.ts
+        env:
+          INPUT_PRINT_SUMMARY: true
+          INPUT_RESULT_BADGE: false
+
+          # if you want to hide site url use secret env: ${{ secrets.URL }}
+          # or you can enter the URL of the site here
+          INPUT_TEST_URL: "https://abordage.dev"
+
+          INPUT_GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          INPUT_GIST_ID: ${{ secrets.GIST_ID }}
