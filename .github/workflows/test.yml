@@ -16,7 +16,8 @@ jobs:
         run: |
           npm ci
           ts-node src/index.ts
-        with:
+
+        env:
           INPUT_PRINT_SUMMARY: true
           INPUT_RESULT_BADGE: false
 
