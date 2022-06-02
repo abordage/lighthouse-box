@@ -25,11 +25,6 @@ inputs:
 #  using: "node16"
 #  main: "dist/index.js"
 
-#npm ci
-#          npm install -g typescript
-#          npm install -g ts-node
-#          ts-node src/index.ts
-
 runs:
   using: "composite"
   steps:
@@ -43,7 +38,6 @@ runs:
     - name: Run
       run: ts-node src/index.ts
       shell: bash
-
 
 branding:
   icon: "paperclip"
