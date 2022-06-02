@@ -28,14 +28,14 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: 🛠️ Install and build
+    - name: 🛠️ Install
       run: |
         npm ci
         npm install -g typescript
         npm install -g ts-node
       shell: bash
 
-    - name: Run
+    - name: 🛠️ Run typescript
       run: ts-node src/index.ts
       shell: bash
 
