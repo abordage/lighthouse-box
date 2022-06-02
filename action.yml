@@ -19,8 +19,16 @@ inputs:
     default: true
 
 runs:
-  using: "node16"
-  main: "dist/index.js"
+  using: "composite"
+  steps:
+    - run: |
+        npm i;
+        ts-node src/index.ts;
+        shell: bash
+
+#runs:
+#  using: "node16"
+#  main: "dist/index.js"
 
 branding:
   icon: "paperclip"
