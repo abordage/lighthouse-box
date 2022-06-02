@@ -21,9 +21,29 @@ inputs:
   INPUT_RESULT_BADGE:
     default: false
 
+#runs:
+#  using: "node16"
+#  main: "dist/index.js"
+
+#npm ci
+#          npm install -g typescript
+#          npm install -g ts-node
+#          ts-node src/index.ts
+
 runs:
-  using: "node16"
-  main: "dist/index.js"
+  using: "composite"
+  steps:
+    - name: 🛠️ Install and build
+      run: |
+        npm ci
+        npm install -g typescript
+        npm install -g ts-node
+      shell: bash
+
+    - name: Run
+      run: ts-node src/index.ts
+      shell: bash
+
 
 branding:
   icon: "paperclip"
