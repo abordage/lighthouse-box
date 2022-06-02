@@ -1,9 +1,11 @@
 {
   "name": "lighthouse-box",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Show your website metrics in a pinned gist for your GitHub profile",
   "scripts": {
     "build": "rimraf dist/ && tsc src/index.ts --outDir dist",
+    "build-ncc": "rimraf dist/ && tsc src/index.ts --outDir dist && ncc build dist/index.js --minify",
+    "test-ncc": "ncc run src/index.ts",
     "lint": "eslint src/ --ext .ts --fix"
   },
   "keywords": [
@@ -26,6 +28,7 @@
     "@types/node-fetch": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
+    "@vercel/ncc": "^0.34.0",
     "eslint": "^8.16.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
