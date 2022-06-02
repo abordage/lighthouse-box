@@ -2,6 +2,10 @@
 
 All notable changes to `lighthouse-box` will be documented in this file.
 
+## 0.2.1 - 2022-06-02
+
+**Full Changelog**: https://github.com/abordage/lighthouse-box/compare/0.2.0...0.2.1
+
 ## 0.2.0 - 2022-06-01
 
 **Full Changelog**: https://github.com/abordage/lighthouse-box/compare/0.1.1...0.2.0
