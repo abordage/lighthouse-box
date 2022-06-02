@@ -45,7 +45,7 @@ var lighthouse = require('lighthouse');
 (0, dotenv_1.config)({ path: (0, path_1.resolve)(__dirname, '../.env') });
 var GH_TOKEN = core.getInput('GH_TOKEN', { required: true });
 var GIST_ID = core.getInput('GIST_ID', { required: true });
-var TEST_URL = core.getInput('URL', { required: true });
+var TEST_URL = core.getInput('TEST_URL', { required: true });
 var PRINT_SUMMARY = core.getBooleanInput('PRINT_SUMMARY', { required: true });
 var RESULT_BADGE = core.getBooleanInput('RESULT_BADGE', { required: true });
 var ACTION_URL = 'https://github.com/marketplace/actions/lighthouse-box';

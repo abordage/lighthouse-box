@@ -9,7 +9,7 @@ config({path: resolve(__dirname, '../.env')});
 
 const GH_TOKEN = core.getInput('GH_TOKEN', {required: true});
 const GIST_ID = core.getInput('GIST_ID', {required: true});
-const TEST_URL = core.getInput('URL', {required: true});
+const TEST_URL = core.getInput('TEST_URL', {required: true});
 const PRINT_SUMMARY = core.getBooleanInput('PRINT_SUMMARY', {required: true});
 const RESULT_BADGE = core.getBooleanInput('RESULT_BADGE', {required: true});
 
