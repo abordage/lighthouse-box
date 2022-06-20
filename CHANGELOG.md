@@ -2,6 +2,14 @@
 
 All notable changes to `lighthouse-box` will be documented in this file.
 
+## 1.0.2 - 2022-06-20
+
+### What's Changed
+
+- Bump jpeg-js from 0.4.3 to 0.4.4 by @dependabot in https://github.com/abordage/lighthouse-box/pull/2
+
+**Full Changelog**: https://github.com/abordage/lighthouse-box/compare/1.0.1...1.0.2
+
 ## 1.0.1 - 2022-06-02
 
 **Full Changelog**: https://github.com/abordage/lighthouse-box/compare/1.0.0...1.0.1
