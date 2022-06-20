@@ -17,7 +17,7 @@ const ACTION_URL = 'https://github.com/marketplace/actions/lighthouse-box';
 
 const updateDate = new Date().toLocaleDateString('en-us', {day: 'numeric', year: 'numeric', month: 'short'});
 const summaryTable = [];
-const title = 'My website metrics [update ' + updateDate + ']';
+const title = 'My website [update ' + updateDate + ']';
 
 (async () => {
   /**

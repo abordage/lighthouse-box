@@ -6,6 +6,7 @@
     "build": "rimraf dist/ && tsc src/index.ts --outDir dist",
     "build-ncc": "rimraf dist/ && tsc src/index.ts --outDir dist && ncc build dist/index.js --minify",
     "test-ncc": "ncc run src/index.ts",
+    "run-local": "ts-node src/index.ts",
     "lint": "eslint src/ --ext .ts --fix"
   },
   "keywords": [
