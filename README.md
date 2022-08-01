@@ -5,7 +5,7 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 <p style="text-align: center;" align="center">
 <a href="https://github.com/abordage" title="Lighthouse Metrics Gist">
     <img alt="Lighthouse Metrics Gist" 
-         src="https://github.com/abordage/lighthouse-box/blob/master/docs/images/lighthouse-box-example-830-rounded.png">
+         src="https://github.com/abordage/lighthouse-box/blob/master/docs/images/lighthouse-box-example-830-rounded.png?raw=true">
 </a>
 </p>
 
