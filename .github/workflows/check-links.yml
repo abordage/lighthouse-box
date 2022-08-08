@@ -17,7 +17,7 @@ jobs:
         uses: lycheeverse/lychee-action@v1.5.1
         with:
           # Check only README.md
-          args: --verbose --no-progress './README.md' --exclude-mail
+          args: --verbose --no-progress --exclude-mail './README.md'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
