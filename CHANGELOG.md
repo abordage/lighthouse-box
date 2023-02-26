@@ -2,6 +2,14 @@
 
 All notable changes to `lighthouse-box` will be documented in this file.
 
+## 1.1.0 - 2023-02-26
+
+### What's Changed
+
+- Update dependencies by @abordage in https://github.com/abordage/lighthouse-box/pull/13
+
+**Full Changelog**: https://github.com/abordage/lighthouse-box/compare/1.0.3...1.1.0
+
 ## 1.0.3 - 2023-02-25
 
 ### What's Changed
