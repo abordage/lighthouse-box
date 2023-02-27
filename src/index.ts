@@ -46,7 +46,7 @@ const title = 'My website [update ' + updateDate + ']';
             if (content[1] > 90) badge = '🥇';
             if (content[1] === 100) badge = '🏆';
 
-            const title = (content[0] + ':').padEnd(RESULT_BADGE ? 42 : 54, '.');
+            const title = (content[0] + ':').padEnd(RESULT_BADGE ? 41 : 53, '.');
             const percent = (content[1] + '%').padStart(4, '.');
             const result = RESULT_BADGE ? ' ' + (' ' + badge).padStart(11, '.') : '';
 
