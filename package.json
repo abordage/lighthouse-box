@@ -22,7 +22,7 @@
     "@octokit/rest": "^20.1.1",
     "chrome-launcher": "^0.15.2",
     "dotenv": "^16.0.3",
-    "lighthouse": "^9.6.8"
+    "lighthouse": "^12.2.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
