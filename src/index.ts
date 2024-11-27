@@ -6,78 +6,84 @@ import * as chromeLauncher from 'chrome-launcher';
 import * as lighthouse from 'lighthouse';
 import {Flags} from 'lighthouse/types/externs';
 
+// Load environment variables
 config({path: resolve(__dirname, '../.env')});
 
-const GH_TOKEN = core.getInput('GH_TOKEN', {required: true});
-const GIST_ID = core.getInput('GIST_ID', {required: true});
-const TEST_URL = core.getInput('TEST_URL', {required: true});
-const PRINT_SUMMARY = core.getBooleanInput('PRINT_SUMMARY', {required: true});
-const RESULT_BADGE = core.getBooleanInput('RESULT_BADGE', {required: true});
+interface ActionInputs {
+  GH_TOKEN: string;
+  GIST_ID: string;
+  TEST_URL: string;
+  PRINT_SUMMARY: boolean;
+  RESULT_BADGE: boolean;
+}
 
 const ACTION_URL = 'https://github.com/marketplace/actions/lighthouse-box';
+const inputs: ActionInputs = {
+  GH_TOKEN: core.getInput('GH_TOKEN', {required: true}),
+  GIST_ID: core.getInput('GIST_ID', {required: true}),
+  TEST_URL: core.getInput('TEST_URL', {required: true}),
+  PRINT_SUMMARY: core.getBooleanInput('PRINT_SUMMARY', {required: true}),
+  RESULT_BADGE: core.getBooleanInput('RESULT_BADGE', {required: true}),
+};
 
-const updateDate = new Date().toLocaleDateString('en-us', {day: 'numeric', year: 'numeric', month: 'short'});
-const summaryTable = [];
-const title = 'My website [update ' + updateDate + ']';
+function getCurrentDate(): string {
+  return new Date().toLocaleDateString('en-us', {day: 'numeric', year: 'numeric', month: 'short'});
+}
 
-(async () => {
-  /** Get metrics */
+const UPDATE_DATE: string = getCurrentDate();
+const summaryTable: any[] = [];
+const GIST_TITLE = `My website [update ${UPDATE_DATE}]`;
+
+async function fetchMetrics(testUrl: string): Promise<lighthouse.RunnerResult> {
   const chrome = await chromeLauncher.launch({chromeFlags: ['--headless']});
-  const options: Flags = {logLevel: 'info', output: 'json', port: chrome.port};
-  const runnerResult = await lighthouse(TEST_URL, options);
+  const OPTIONS: Flags = {logLevel: 'info', output: 'json', port: chrome.port};
+  const runnerResult = await lighthouse(testUrl, OPTIONS);
   await chrome.kill();
+  return runnerResult;
+}
 
+function generateGistContent(runnerResult: lighthouse.RunnerResult): string {
+  const {categories} = runnerResult.lhr;
+  const metrics = {
+    performance: categories.performance.score * 100,
+    accessibility: categories.accessibility.score * 100,
+    bestPractices: categories['best-practices'].score * 100,
+    seo: categories.seo.score * 100,
+    pwa: categories.pwa.score * 100,
+  };
   summaryTable.push([{data: 'Category', header: true}, {data: 'Result', header: true}]);
+  return Object.entries(metrics).map(([category, score]) => {
+    summaryTable.push([category, `${score}%`]);
+    let badge = '🙉';
+    if (score > 80) badge = '🥈';
+    if (score > 90) badge = '🥇';
+    if (score === 100) badge = '🏆';
+    const title = `${category}:`.padEnd(inputs.RESULT_BADGE ? 37 : 49, '.');
+    const percent = `${score}%`.padStart(4, '.');
+    const result = inputs.RESULT_BADGE ? ` ${badge}`.padStart(11, '.') : '';
+    return `${title}${percent}${result}`;
+  }).join('\n');
+}
 
-  /** Formatting */
-  const gistContent =
-        [
-          ['Performance', runnerResult.lhr.categories.performance.score * 100],
-          ['Accessibility', runnerResult.lhr.categories.accessibility.score * 100],
-          ['Best Practices', runnerResult.lhr.categories['best-practices'].score * 100],
-          ['SEO', runnerResult.lhr.categories.seo.score * 100],
-          ['PWA Ready', runnerResult.lhr.categories.pwa.score * 100]
-        ]
-          .map((content) => {
-            summaryTable.push([content[0], content[1] + '%']);
-
-            let badge = '🙉';
-            if (content[1] > 80) badge = '🥈';
-            if (content[1] > 90) badge = '🥇';
-            if (content[1] === 100) badge = '🏆';
-
-            const title = (content[0] + ':').padEnd(RESULT_BADGE ? 41 : 53, '.');
-            const percent = (content[1] + '%').padStart(4, '.');
-            const result = RESULT_BADGE ? ' ' + (' ' + badge).padStart(11, '.') : '';
-
-            return title + percent + result;
-          })
-          .join('\n');
-
-  /** Get gist filename */
-  const octokit = new Octokit({auth: GH_TOKEN});
-  const gist = await octokit.gists.get({gist_id: GIST_ID})
-    .catch(error => core.setFailed('Action failed: Gist ' + error.message));
-  if (!gist) return;
-
-  const filename = Object.keys(gist.data.files || {})[0];
-  if (!filename) {
-    core.setFailed('Action failed: Gist filename not found');
-    return;
-  }
-
-  /** Update gist */
-  await octokit.gists.update({
-    gist_id: GIST_ID,
-    files: {
-      [filename]: {
-        filename: title,
-        content: gistContent
-      }
+async function updateGistContent(gistId: string, content: string): Promise<void> {
+  const octokit = new Octokit({auth: inputs.GH_TOKEN});
+  try {
+    const gist = await octokit.gists.get({gist_id: gistId});
+    const filename = Object.keys(gist.data.files || {})[0];
+    if (!filename) {
+      core.setFailed('Action failed: Gist filename not found');
+      return;
     }
-  }).catch(error => core.setFailed('Action failed: Gist ' + error.message));
+    await octokit.gists.update({
+      gist_id: gistId,
+      files: {[filename]: {filename: GIST_TITLE, content}},
+    });
+  } catch (error: any) {
+    core.setFailed(`Action failed: Gist ${error.message}`);
+  }
+}
 
-  /** Print summary */
+async function printLighthouseSummary(runnerResult: lighthouse.RunnerResult): Promise<void> {
   const summary = core.summary
     .addHeading('Results')
     .addTable(summaryTable)
@@ -86,10 +92,16 @@ const title = 'My website [update ' + updateDate + ']';
     .addLink(runnerResult.lhr.mainDocumentUrl, runnerResult.lhr.mainDocumentUrl)
     .addRaw(' generated by ')
     .addLink('lighthouse-box/1.1', ACTION_URL);
-
-  if (PRINT_SUMMARY) {
+  if (inputs.PRINT_SUMMARY) {
     await summary.write();
   } else {
     console.log(summary.stringify());
   }
+}
+
+(async () => {
+  const runnerResult = await fetchMetrics(inputs.TEST_URL);
+  const gistContent = generateGistContent(runnerResult);
+  await updateGistContent(inputs.GIST_ID, gistContent);
+  await printLighthouseSummary(runnerResult);
 })();
