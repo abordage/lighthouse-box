@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "@octokit/rest": "^20.1.1",
+    "@octokit/rest": "^21.1.1",
     "chrome-launcher": "^0.15.2",
     "dotenv": "^16.0.3",
     "lighthouse": "^9.6.8"
