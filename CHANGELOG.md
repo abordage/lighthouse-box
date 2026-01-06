@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/abordage/lighthouse-box/compare/v2.0.0...v2.1.0) (2026-01-06)
+
+
+### Features
+
+* add FORM_FACTOR input for mobile/desktop selection ([bc4d3c9](https://github.com/abordage/lighthouse-box/commit/bc4d3c9f9ce01c07a8fdea96972949629ffb4040))
+
 # [2.0.0](https://github.com/abordage/lighthouse-box/compare/v1.0.0...v2.0.0) (2026-01-06)
 
 
