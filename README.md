@@ -70,6 +70,7 @@ Next, statistics will be updated automatically every day. Pin this gist on your 
     GIST_ID: ${{ secrets.GIST_ID }}
     TEST_URL: 'https://example.com'
     GIST_TITLE: 'My Portfolio'
+    FORM_FACTOR: 'desktop'
     RESULT_BADGE: 'true'
     PRINT_SUMMARY: 'true'
 ```
@@ -82,6 +83,7 @@ Next, statistics will be updated automatically every day. Pin this gist on your 
 | `GIST_ID`       | ID of the Gist to update                      | Yes      | -              |
 | `TEST_URL`      | URL to run Lighthouse audit on                | Yes      | -              |
 | `GIST_TITLE`    | Custom title for the Gist (before date)       | No       | `My website`   |
+| `FORM_FACTOR`   | Device type: `mobile` or `desktop`            | No       | `mobile`       |
 | `PRINT_SUMMARY` | Print summary to GitHub Actions               | No       | `true`         |
 | `RESULT_BADGE`  | Show emoji badges in Gist                     | No       | `false`        |
 
