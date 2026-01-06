@@ -1,15 +1,5 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/'
-    schedule:
-      interval: 'weekly'
-    commit-message:
-      prefix: 'deps'
-      include: 'scope'
-    labels:
-      - 'dependencies'
-
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
