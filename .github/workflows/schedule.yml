@@ -3,23 +3,29 @@ name: Lighthouse Metrics
 on:
   workflow_dispatch:
   schedule:
-    - cron: "10 3 * * *"
+    - cron: '10 3 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   update-lighthouse-gist:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - name: lighthouse-box
-        uses: abordage/lighthouse-box@master
-        env:
-          INPUT_PRINT_SUMMARY: true
-          INPUT_RESULT_BADGE: false
-
-          # if you want to hide site url use secret env: ${{ secrets.URL }}
-          # or you can enter the URL of the site here
-          INPUT_TEST_URL: https://abordage.dev
-
-          INPUT_GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          INPUT_GIST_ID: ${{ secrets.GIST_ID }}
+      - name: Lighthouse Box
+        uses: abordage/lighthouse-box@main
+        with:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          TEST_URL: https://abordage.dev
+          PRINT_SUMMARY: 'true'
+          RESULT_BADGE: 'false'
