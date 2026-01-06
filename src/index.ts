@@ -22,9 +22,9 @@ async function run(): Promise<void> {
 
   const inputs = getInputs();
 
-  console.log(`Running Lighthouse audit for: ${inputs.testUrl}`);
+  console.log(`Running Lighthouse audit for: ${inputs.testUrl} (${inputs.formFactor})`);
 
-  const result = await runLighthouseAudit(inputs.testUrl);
+  const result = await runLighthouseAudit(inputs.testUrl, inputs.formFactor);
   const gistContent = generateGistContent(result.metrics, inputs.resultBadge);
   const gistTitle = generateGistTitle(inputs.gistTitle);
 

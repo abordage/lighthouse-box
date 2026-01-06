@@ -1,3 +1,5 @@
+export type FormFactor = 'mobile' | 'desktop';
+
 export interface ActionInputs {
   ghToken: string;
   gistId: string;
@@ -5,6 +7,7 @@ export interface ActionInputs {
   printSummary: boolean;
   resultBadge: boolean;
   gistTitle: string;
+  formFactor: FormFactor;
 }
 
 export interface LighthouseMetrics {

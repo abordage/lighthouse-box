@@ -27,6 +27,10 @@ inputs:
     description: 'Custom title for the Gist (appears before date)'
     default: 'My website'
 
+  FORM_FACTOR:
+    description: 'Device type for Lighthouse audit (mobile or desktop)'
+    default: 'mobile'
+
 runs:
   using: 'node24'
   main: 'dist/index.js'

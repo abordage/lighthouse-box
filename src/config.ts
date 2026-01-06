@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import { createRequire } from 'module';
-import type { ActionInputs } from './types.js';
+import type { ActionInputs, FormFactor } from './types.js';
 
 const require = createRequire(import.meta.url);
 const packageJson = require('../package.json') as { version: string };
@@ -9,6 +9,8 @@ const ACTION_URL = 'https://github.com/marketplace/actions/lighthouse-box';
 const ACTION_VERSION = packageJson.version;
 
 const DEFAULT_GIST_TITLE = 'My website';
+const DEFAULT_FORM_FACTOR: FormFactor = 'mobile';
+const VALID_FORM_FACTORS: FormFactor[] = ['mobile', 'desktop'];
 
 function isRunningInGitHubActions(): boolean {
   return process.env.GITHUB_ACTIONS === 'true';
@@ -42,6 +44,18 @@ function getBooleanInput(key: string, defaultValue: boolean): boolean {
   return envValue.toLowerCase() === 'true';
 }
 
+function getFormFactorInput(): FormFactor {
+  const value = getInputWithDefault('FORM_FACTOR', DEFAULT_FORM_FACTOR);
+  const normalized = value.toLowerCase() as FormFactor;
+
+  if (!VALID_FORM_FACTORS.includes(normalized)) {
+    console.warn(`Invalid FORM_FACTOR "${value}", using default "${DEFAULT_FORM_FACTOR}"`);
+    return DEFAULT_FORM_FACTOR;
+  }
+
+  return normalized;
+}
+
 export function getInputs(): ActionInputs {
   return {
     ghToken: getInput('GH_TOKEN', true),
@@ -50,6 +64,7 @@ export function getInputs(): ActionInputs {
     printSummary: getBooleanInput('PRINT_SUMMARY', true),
     resultBadge: getBooleanInput('RESULT_BADGE', false),
     gistTitle: getInputWithDefault('GIST_TITLE', DEFAULT_GIST_TITLE),
+    formFactor: getFormFactorInput(),
   };
 }
 

@@ -33,7 +33,7 @@
     "@octokit/rest": "^22.0.1",
     "chrome-launcher": "^1.1.2",
     "lighthouse": "^12.2.1",
-    "lighthouse-pwa": "npm:lighthouse@10.4.0"
+    "lighthouse-pwa": "npm:lighthouse@^11.7.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

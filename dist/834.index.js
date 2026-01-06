@@ -8434,7 +8434,7 @@ function _readSourceFile(filename) {
 
 /***/ }),
 
-/***/ 32606:
+/***/ 10225:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
@@ -8592,7 +8592,7 @@ function addRequestBreadcrumb(event, url, req, res) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var console_1 = __webpack_require__(83365);
 exports.Console = console_1.Console;
-var http_1 = __webpack_require__(32606);
+var http_1 = __webpack_require__(10225);
 exports.Http = http_1.Http;
 var onuncaughtexception_1 = __webpack_require__(54339);
 exports.OnUncaughtException = onuncaughtexception_1.OnUncaughtException;
@@ -10066,7 +10066,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const events_1 = __webpack_require__(24434);
-const debug_1 = __importDefault(__webpack_require__(44645));
+const debug_1 = __importDefault(__webpack_require__(2830));
 const promisify_1 = __importDefault(__webpack_require__(37752));
 const debug = debug_1.default('agent-base');
 function isAgent(v) {
@@ -10312,7 +10312,7 @@ const net_1 = __importDefault(__webpack_require__(69278));
 const tls_1 = __importDefault(__webpack_require__(64756));
 const url_1 = __importDefault(__webpack_require__(87016));
 const assert_1 = __importDefault(__webpack_require__(42613));
-const debug_1 = __importDefault(__webpack_require__(44645));
+const debug_1 = __importDefault(__webpack_require__(2830));
 const agent_base_1 = __webpack_require__(39568);
 const parse_proxy_response_1 = __importDefault(__webpack_require__(19480));
 const debug = debug_1.default('https-proxy-agent:agent');
@@ -10502,7 +10502,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const debug_1 = __importDefault(__webpack_require__(44645));
+const debug_1 = __importDefault(__webpack_require__(2830));
 const debug = debug_1.default('https-proxy-agent:parse-proxy-response');
 function parseProxyResponse(socket) {
     return new Promise((resolve, reject) => {

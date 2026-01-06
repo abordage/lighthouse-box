@@ -30,9 +30,9 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 
 > **Note**: This action uses two versions of Lighthouse to provide complete metrics:
 > - **Lighthouse 12** for Performance, Accessibility, Best Practices, and SEO
-> - **Lighthouse 10** for PWA (Progressive Web App) category
+> - **Lighthouse 11** for PWA (Progressive Web App) category
 >
-> This is because Google removed the PWA category from Lighthouse 12+. We use Lighthouse 10 specifically to preserve PWA scoring with full service worker checks.
+> This is because Google removed the PWA category from Lighthouse 12+. We use Lighthouse 11 specifically to preserve PWA scoring with full service worker checks.
 
 ## How it works
 
@@ -70,6 +70,7 @@ Next, statistics will be updated automatically every day. Pin this gist on your 
     GIST_ID: ${{ secrets.GIST_ID }}
     TEST_URL: 'https://example.com'
     GIST_TITLE: 'My Portfolio'
+    FORM_FACTOR: 'desktop'
     RESULT_BADGE: 'true'
     PRINT_SUMMARY: 'true'
 ```
@@ -82,6 +83,7 @@ Next, statistics will be updated automatically every day. Pin this gist on your 
 | `GIST_ID`       | ID of the Gist to update                      | Yes      | -              |
 | `TEST_URL`      | URL to run Lighthouse audit on                | Yes      | -              |
 | `GIST_TITLE`    | Custom title for the Gist (before date)       | No       | `My website`   |
+| `FORM_FACTOR`   | Device type: `mobile` or `desktop`            | No       | `mobile`       |
 | `PRINT_SUMMARY` | Print summary to GitHub Actions               | No       | `true`         |
 | `RESULT_BADGE`  | Show emoji badges in Gist                     | No       | `false`        |
 

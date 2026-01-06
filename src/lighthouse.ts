@@ -1,7 +1,7 @@
 import lighthouse from 'lighthouse';
 import lighthousePwa from 'lighthouse-pwa';
 import * as chromeLauncher from 'chrome-launcher';
-import type { LighthouseResult, LighthouseMetrics } from './types.js';
+import type { LighthouseResult, LighthouseMetrics, FormFactor } from './types.js';
 
 interface CategoryScore {
   score: number | null;
@@ -29,19 +29,50 @@ function scoreToPercent(category: CategoryScore | undefined): number {
   return Math.round(category.score * 100);
 }
 
+interface LighthouseOptions {
+  port: number;
+  output: 'json';
+  logLevel: 'error';
+  onlyCategories: string[];
+  formFactor: FormFactor;
+  screenEmulation?: { disabled: boolean };
+}
+
+function buildLighthouseOptions(
+  port: number,
+  formFactor: FormFactor,
+  categories: string[]
+): LighthouseOptions {
+  const options: LighthouseOptions = {
+    port,
+    output: 'json',
+    logLevel: 'error',
+    onlyCategories: categories,
+    formFactor,
+  };
+
+  if (formFactor === 'desktop') {
+    options.screenEmulation = { disabled: true };
+  }
+
+  return options;
+}
+
 /**
  * Run Lighthouse v12 audit for Performance, Accessibility, Best Practices, SEO
  */
 async function runMainAudit(
   url: string,
-  port: number
+  port: number,
+  formFactor: FormFactor
 ): Promise<{ categories: LighthouseCategories; finalUrl: string }> {
-  const result = await lighthouse(url, {
+  const options = buildLighthouseOptions(
     port,
-    output: 'json',
-    logLevel: 'error',
-    onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
-  }) as LighthouseRunnerResult | undefined;
+    formFactor,
+    ['performance', 'accessibility', 'best-practices', 'seo']
+  );
+
+  const result = await lighthouse(url, options) as LighthouseRunnerResult | undefined;
 
   if (!result) {
     throw new Error(`Lighthouse v12 returned no results for ${url}`);
@@ -54,38 +85,39 @@ async function runMainAudit(
 }
 
 /**
- * Run Lighthouse v10 audit for PWA category only
+ * Run Lighthouse v11 audit for PWA category only
  */
 async function runPwaAudit(
   url: string,
-  port: number
+  port: number,
+  formFactor: FormFactor
 ): Promise<number> {
-  const result = await lighthousePwa(url, {
-    port,
-    output: 'json',
-    logLevel: 'error',
-    onlyCategories: ['pwa'],
-  }) as LighthouseRunnerResult | undefined;
+  const options = buildLighthouseOptions(port, formFactor, ['pwa']);
+
+  const result = await lighthousePwa(url, options) as LighthouseRunnerResult | undefined;
 
   if (!result) {
-    console.warn('Lighthouse v10 (PWA) returned no results, defaulting to 0');
+    console.warn('Lighthouse v11 (PWA) returned no results, defaulting to 0');
     return 0;
   }
 
   return scoreToPercent(result.lhr.categories.pwa);
 }
 
-export async function runLighthouseAudit(url: string): Promise<LighthouseResult> {
+export async function runLighthouseAudit(
+  url: string,
+  formFactor: FormFactor
+): Promise<LighthouseResult> {
   const chrome = await chromeLauncher.launch({
     chromeFlags: ['--headless', '--no-sandbox', '--disable-gpu'],
   });
 
   try {
-    console.log('Running Lighthouse v12 audit (performance, accessibility, best-practices, seo)...');
-    const mainResult = await runMainAudit(url, chrome.port);
+    console.log(`Running Lighthouse v12 audit (${formFactor}, performance, accessibility, best-practices, seo)...`);
+    const mainResult = await runMainAudit(url, chrome.port, formFactor);
 
-    console.log('Running Lighthouse v10 audit (pwa)...');
-    const pwaScore = await runPwaAudit(url, chrome.port);
+    console.log(`Running Lighthouse v11 audit (${formFactor}, pwa)...`);
+    const pwaScore = await runPwaAudit(url, chrome.port, formFactor);
 
     const metrics: LighthouseMetrics = {
       performance: scoreToPercent(mainResult.categories.performance),
