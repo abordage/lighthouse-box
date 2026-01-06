@@ -5,10 +5,9 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 <p style="text-align: center;" align="center">
 <a href="https://github.com/abordage" title="Lighthouse Metrics Gist">
     <img alt="Lighthouse Metrics Gist" 
-         src="https://github.com/abordage/lighthouse-box/blob/master/docs/images/lighthouse-box-example-830-rounded.png?raw=true">
+         src="https://github.com/abordage/lighthouse-box/blob/main/docs/images/lighthouse-box-example-830-rounded.png?raw=true">
 </a>
 </p>
-
 
 <p style="text-align: center;" align="center">
 
@@ -16,20 +15,24 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
     <img alt="language" src="https://img.shields.io/badge/language-typescript-blue">
 </a>
 
-<a href="https://scrutinizer-ci.com/g/abordage/lighthouse-box/" title="Scrutinizer Quality Score">
-    <img alt="Scrutinizer Quality Score" 
-         src="https://scrutinizer-ci.com/g/abordage/lighthouse-box/badges/quality-score.png?b=master">
-</a>
-
-
-<a href="https://github.com/abordage/lighthouse-box/blob/master/LICENSE.md" title="License">
+<a href="https://github.com/abordage/lighthouse-box/blob/main/LICENSE.md" title="License">
     <img alt="License" src="https://img.shields.io/github/license/abordage/lighthouse-box">
 </a>
 
 </p>
 
+## Features
 
-[▶ **See example**](https://github.com/abordage)
+- **5 Lighthouse categories**: Performance, Accessibility, Best Practices, SEO, and PWA
+- **Emoji badges**: Optional visual indicators for scores
+- **Pinned Gist**: Perfect for your GitHub profile
+- **Automatic updates**: Schedule daily runs with GitHub Actions
+
+> **Note**: This action uses two versions of Lighthouse to provide complete metrics:
+> - **Lighthouse 12** for Performance, Accessibility, Best Practices, and SEO
+> - **Lighthouse 10** for PWA (Progressive Web App) category
+>
+> This is because Google removed the PWA category from Lighthouse 12+. We use Lighthouse 10 specifically to preserve PWA scoring with full service worker checks.
 
 ## How it works
 
@@ -46,7 +49,42 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 It's all. Go to **Actions** > **Lighthouse Metrics** and **Run workflow**. Gist should update and show Lighthouse metrics.
 Next, statistics will be updated automatically every day. Pin this gist on your profile!
 
-> Inspired from [awesome pinned-gist project](https://github.com/matchai/awesome-pinned-gists)
+## Usage in your workflow
+
+```yaml
+- name: Lighthouse Box
+  uses: abordage/lighthouse-box@v2
+  with:
+    GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    GIST_ID: ${{ secrets.GIST_ID }}
+    TEST_URL: 'https://example.com'
+```
+
+### With all options
+
+```yaml
+- name: Lighthouse Box
+  uses: abordage/lighthouse-box@v2
+  with:
+    GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    GIST_ID: ${{ secrets.GIST_ID }}
+    TEST_URL: 'https://example.com'
+    GIST_TITLE: 'My Portfolio'
+    RESULT_BADGE: 'true'
+    PRINT_SUMMARY: 'true'
+```
+
+### Inputs
+
+| Input           | Description                                   | Required | Default        |
+|-----------------|-----------------------------------------------|----------|----------------|
+| `GH_TOKEN`      | GitHub token with gist scope                  | Yes      | -              |
+| `GIST_ID`       | ID of the Gist to update                      | Yes      | -              |
+| `TEST_URL`      | URL to run Lighthouse audit on                | Yes      | -              |
+| `GIST_TITLE`    | Custom title for the Gist (before date)       | No       | `My website`   |
+| `PRINT_SUMMARY` | Print summary to GitHub Actions               | No       | `true`         |
+| `RESULT_BADGE`  | Show emoji badges in Gist                     | No       | `false`        |
+
 
 ## Feedback
 
@@ -54,7 +92,7 @@ If you have any feedback, comments or suggestions, please feel free to open an i
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/abordage/.github/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/abordage/.github/blob/main/CONTRIBUTING.md) for details.
 
 ## Credits
 

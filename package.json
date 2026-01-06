@@ -1,42 +1,49 @@
 {
   "name": "lighthouse-box",
-  "version": "1.0.0",
-  "description": "Show your website metrics in a pinned gist for your GitHub profile",
+  "version": "2.0.0",
+  "description": "Show your website Lighthouse metrics in a pinned GitHub Gist",
+  "main": "dist/index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "build": "rimraf dist/ && tsc src/index.ts --outDir dist",
-    "build-ncc": "rimraf dist/ && tsc src/index.ts --outDir dist && ncc build dist/index.js --minify",
-    "test-ncc": "ncc run src/index.ts",
-    "run-local": "ts-node src/index.ts",
-    "lint": "eslint src/ --ext .ts --fix"
+    "build": "rimraf dist && ncc build src/index.ts -o dist --minify",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "lighthouse",
-    "website performance",
-    "lighthouse-box",
-    "pinned gist"
+    "github-actions",
+    "gist",
+    "pinned-gist",
+    "website-performance"
   ],
   "author": "Pavel Bychko <abordage.dev@gmail.com> (https://abordage.dev)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abordage/lighthouse-box.git"
+  },
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@octokit/rest": "^20.1.1",
-    "chrome-launcher": "^0.15.2",
-    "dotenv": "^16.0.3",
-    "lighthouse": "^9.6.8"
+    "@actions/core": "^2.0.1",
+    "@octokit/rest": "^22.0.1",
+    "chrome-launcher": "^1.1.2",
+    "lighthouse": "^12.2.1",
+    "lighthouse-pwa": "npm:lighthouse@10.4.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
-    "@types/node-fetch": "2.6.0",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "@typescript-eslint/parser": "^5.53.0",
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^24.0.0",
     "@vercel/ncc": "^0.38.3",
-    "eslint": "^8.34.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-n": "^15.6.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "ts-node": "^10.9.1",
-    "tslib": "^2.5.0",
-    "typescript": "5.1.6"
+    "dotenv": "^17.2.3",
+    "eslint": "^9.17.0",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0"
   }
 }

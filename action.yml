@@ -1,44 +1,36 @@
-name: "lighthouse-box"
-author: "abordage"
-description: "Show your website metrics in a pinned gist for your GitHub profile"
+name: 'lighthouse-box'
+author: 'abordage'
+description: 'Show your website Lighthouse metrics in a pinned GitHub Gist'
 
 inputs:
-  INPUT_GH_TOKEN:
-    description: 'GitHub token'
+  GH_TOKEN:
+    description: 'GitHub token with gist scope'
     required: true
 
-  INPUT_GIST_ID:
-    description: 'Gist Id'
+  GIST_ID:
+    description: 'ID of the Gist to update'
     required: true
 
-  INPUT_TEST_URL:
-    description: 'Your url'
+  TEST_URL:
+    description: 'URL to run Lighthouse audit on'
     required: true
 
-  INPUT_PRINT_SUMMARY:
-    default: true
+  PRINT_SUMMARY:
+    description: 'Print summary to GitHub Actions summary'
+    default: 'true'
 
-  INPUT_RESULT_BADGE:
-    default: false
+  RESULT_BADGE:
+    description: 'Show emoji badges in Gist'
+    default: 'false'
 
-#runs:
-#  using: "node16"
-#  main: "dist/index.js"
+  GIST_TITLE:
+    description: 'Custom title for the Gist (appears before date)'
+    default: 'My website'
 
 runs:
-  using: "composite"
-  steps:
-    - name: 🛠️ Install
-      run: |
-        npm ci
-        npm install -g typescript
-        npm install -g ts-node
-      shell: bash
-
-    - name: 🛠️ Run typescript
-      run: ts-node src/index.ts
-      shell: bash
+  using: 'node24'
+  main: 'dist/index.js'
 
 branding:
-  icon: "paperclip"
-  color: "orange"
+  icon: 'zap'
+  color: 'orange'

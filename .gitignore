@@ -1,4 +1,23 @@
-*.log
-.idea
+# Dependencies
+node_modules/
+
+# Environment
 .env
-/node_modules
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# TypeScript cache
+*.tsbuildinfo
