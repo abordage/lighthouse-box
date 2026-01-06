@@ -30,9 +30,9 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 
 > **Note**: This action uses two versions of Lighthouse to provide complete metrics:
 > - **Lighthouse 12** for Performance, Accessibility, Best Practices, and SEO
-> - **Lighthouse 10** for PWA (Progressive Web App) category
+> - **Lighthouse 11** for PWA (Progressive Web App) category
 >
-> This is because Google removed the PWA category from Lighthouse 12+. We use Lighthouse 10 specifically to preserve PWA scoring with full service worker checks.
+> This is because Google removed the PWA category from Lighthouse 12+. We use Lighthouse 11 specifically to preserve PWA scoring with full service worker checks.
 
 ## How it works
 
