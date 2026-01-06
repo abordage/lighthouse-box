@@ -1,3 +1,18 @@
+# [2.0.0](https://github.com/abordage/lighthouse-box/compare/v1.0.0...v2.0.0) (2026-01-06)
+
+
+### Bug Fixes
+
+* **project:** correct release version numbering ([d81dff1](https://github.com/abordage/lighthouse-box/commit/d81dff1fb835edf5ce255d22c0b9781ffd811257))
+
+
+### BREAKING CHANGES
+
+* **project:** This release corrects the version numbering.
+Previous v1.0.0 release was incorrect - this should be v2.0.0.
+The action now requires Node.js 24 runtime and uses updated
+input names (GH_TOKEN, GIST_ID, TEST_URL instead of INPUT_* format).
+
 # 1.0.0 (2026-01-06)
 
 
