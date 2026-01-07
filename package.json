@@ -8,7 +8,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "build": "rimraf dist && ncc build src/index.ts -o dist --minify",
+    "build": "rimraf dist && ncc build src/index.ts -o dist",
     "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "lint": "eslint src/",
