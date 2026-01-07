@@ -29,7 +29,7 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 - **Automatic updates**: Schedule daily runs with GitHub Actions
 
 > **Note**: This action uses two versions of Lighthouse to provide complete metrics:
-> - **Lighthouse 12** for Performance, Accessibility, Best Practices, and SEO
+> - **Lighthouse 13** for Performance, Accessibility, Best Practices, and SEO
 > - **Lighthouse 11** for PWA (Progressive Web App) category
 >
 > This is because Google removed the PWA category from Lighthouse 12+. We use Lighthouse 11 specifically to preserve PWA scoring with full service worker checks.
@@ -53,7 +53,7 @@ Next, statistics will be updated automatically every day. Pin this gist on your 
 
 ```yaml
 - name: Lighthouse Box
-  uses: abordage/lighthouse-box@v2
+  uses: abordage/lighthouse-box@v3
   with:
     GH_TOKEN: ${{ secrets.GH_TOKEN }}
     GIST_ID: ${{ secrets.GIST_ID }}
@@ -64,7 +64,7 @@ Next, statistics will be updated automatically every day. Pin this gist on your 
 
 ```yaml
 - name: Lighthouse Box
-  uses: abordage/lighthouse-box@v2
+  uses: abordage/lighthouse-box@v3
   with:
     GH_TOKEN: ${{ secrets.GH_TOKEN }}
     GIST_ID: ${{ secrets.GIST_ID }}

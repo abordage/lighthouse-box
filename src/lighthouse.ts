@@ -1,137 +1,120 @@
-import lighthouse from 'lighthouse';
-import lighthousePwa from 'lighthouse-pwa';
-import * as chromeLauncher from 'chrome-launcher';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 import type { LighthouseResult, LighthouseMetrics, FormFactor } from './types.js';
 
-interface CategoryScore {
-  score: number | null;
-}
+const execAsync = promisify(exec);
 
-interface LighthouseCategories {
-  performance?: CategoryScore;
-  accessibility?: CategoryScore;
-  'best-practices'?: CategoryScore;
-  seo?: CategoryScore;
-  pwa?: CategoryScore;
-}
+const LIGHTHOUSE_V13 = '13';
+const LIGHTHOUSE_V11 = '11';
+const CHROME_FLAGS = '--headless --no-sandbox --disable-gpu';
+const MAX_BUFFER = 50 * 1024 * 1024; // 50MB for large JSON output
 
-interface LighthouseRunnerResult {
-  lhr: {
-    categories: LighthouseCategories;
-    finalDisplayedUrl: string;
+interface LighthouseReport {
+  finalDisplayedUrl: string;
+  categories: {
+    performance?: { score: number | null };
+    accessibility?: { score: number | null };
+    'best-practices'?: { score: number | null };
+    seo?: { score: number | null };
+    pwa?: { score: number | null };
   };
 }
 
-function scoreToPercent(category: CategoryScore | undefined): number {
-  if (!category || category.score === null) {
+function scoreToPercent(score: number | null | undefined): number {
+  if (score === null || score === undefined) {
     return 0;
   }
-  return Math.round(category.score * 100);
+  return Math.round(score * 100);
 }
 
-interface LighthouseOptions {
-  port: number;
-  output: 'json';
-  logLevel: 'error';
-  onlyCategories: string[];
-  formFactor: FormFactor;
-  screenEmulation?: { disabled: boolean };
-}
-
-function buildLighthouseOptions(
-  port: number,
+function buildCommand(
+  url: string,
   formFactor: FormFactor,
+  version: string,
   categories: string[]
-): LighthouseOptions {
-  const options: LighthouseOptions = {
-    port,
-    output: 'json',
-    logLevel: 'error',
-    onlyCategories: categories,
-    formFactor,
-  };
+): string {
+  const args = [
+    `npx lighthouse@${version}`,
+    `"${url}"`,
+    '--output=json',
+    '--output-path=stdout',
+    `--chrome-flags="${CHROME_FLAGS}"`,
+    `--only-categories=${categories.join(',')}`,
+    `--form-factor=${formFactor}`,
+  ];
 
   if (formFactor === 'desktop') {
-    options.screenEmulation = { disabled: true };
+    args.push('--preset=desktop');
   }
 
-  return options;
+  return args.join(' ');
+}
+
+function parseReport(stdout: string): LighthouseReport {
+  try {
+    return JSON.parse(stdout) as LighthouseReport;
+  } catch {
+    throw new Error('Failed to parse Lighthouse JSON output');
+  }
 }
 
 /**
- * Run Lighthouse v12 audit for Performance, Accessibility, Best Practices, SEO
+ * Run Lighthouse v13 audit for Performance, Accessibility, Best Practices, SEO
  */
 async function runMainAudit(
   url: string,
-  port: number,
   formFactor: FormFactor
-): Promise<{ categories: LighthouseCategories; finalUrl: string }> {
-  const options = buildLighthouseOptions(
-    port,
-    formFactor,
-    ['performance', 'accessibility', 'best-practices', 'seo']
-  );
+): Promise<{ report: LighthouseReport }> {
+  const categories = ['performance', 'accessibility', 'best-practices', 'seo'];
+  const command = buildCommand(url, formFactor, LIGHTHOUSE_V13, categories);
 
-  const result = await lighthouse(url, options) as LighthouseRunnerResult | undefined;
+  console.log(`[1/2] Running Lighthouse v${LIGHTHOUSE_V13} (${categories.join(', ')})...`);
 
-  if (!result) {
-    throw new Error(`Lighthouse v12 returned no results for ${url}`);
-  }
+  const { stdout } = await execAsync(command, { maxBuffer: MAX_BUFFER });
 
-  return {
-    categories: result.lhr.categories,
-    finalUrl: result.lhr.finalDisplayedUrl,
-  };
+  return { report: parseReport(stdout) };
 }
 
 /**
  * Run Lighthouse v11 audit for PWA category only
+ * PWA was removed from Lighthouse v12+, so we use v11 for this category
  */
 async function runPwaAudit(
   url: string,
-  port: number,
   formFactor: FormFactor
 ): Promise<number> {
-  const options = buildLighthouseOptions(port, formFactor, ['pwa']);
+  const command = buildCommand(url, formFactor, LIGHTHOUSE_V11, ['pwa']);
 
-  const result = await lighthousePwa(url, options) as LighthouseRunnerResult | undefined;
+  console.log(`[2/2] Running Lighthouse v${LIGHTHOUSE_V11} (pwa)...`);
 
-  if (!result) {
-    console.warn('Lighthouse v11 (PWA) returned no results, defaulting to 0');
+  try {
+    const { stdout } = await execAsync(command, { maxBuffer: MAX_BUFFER });
+    const report = parseReport(stdout);
+    return scoreToPercent(report.categories.pwa?.score);
+  } catch (error) {
+    console.warn('Lighthouse v11 (PWA) audit failed, defaulting to 0');
+    console.warn(error instanceof Error ? error.message : String(error));
     return 0;
   }
-
-  return scoreToPercent(result.lhr.categories.pwa);
 }
 
 export async function runLighthouseAudit(
   url: string,
   formFactor: FormFactor
 ): Promise<LighthouseResult> {
-  const chrome = await chromeLauncher.launch({
-    chromeFlags: ['--headless', '--no-sandbox', '--disable-gpu'],
-  });
+  const { report: mainReport } = await runMainAudit(url, formFactor);
+  const pwaScore = await runPwaAudit(url, formFactor);
 
-  try {
-    console.log(`Running Lighthouse v12 audit (${formFactor}, performance, accessibility, best-practices, seo)...`);
-    const mainResult = await runMainAudit(url, chrome.port, formFactor);
+  const metrics: LighthouseMetrics = {
+    performance: scoreToPercent(mainReport.categories.performance?.score),
+    accessibility: scoreToPercent(mainReport.categories.accessibility?.score),
+    bestPractices: scoreToPercent(mainReport.categories['best-practices']?.score),
+    seo: scoreToPercent(mainReport.categories.seo?.score),
+    pwa: pwaScore,
+  };
 
-    console.log(`Running Lighthouse v11 audit (${formFactor}, pwa)...`);
-    const pwaScore = await runPwaAudit(url, chrome.port, formFactor);
-
-    const metrics: LighthouseMetrics = {
-      performance: scoreToPercent(mainResult.categories.performance),
-      accessibility: scoreToPercent(mainResult.categories.accessibility),
-      bestPractices: scoreToPercent(mainResult.categories['best-practices']),
-      seo: scoreToPercent(mainResult.categories.seo),
-      pwa: pwaScore,
-    };
-
-    return {
-      url: mainResult.finalUrl,
-      metrics,
-    };
-  } finally {
-    await chrome.kill();
-  }
+  return {
+    url: mainReport.finalDisplayedUrl,
+    metrics,
+  };
 }
