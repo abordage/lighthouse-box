@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/abordage/lighthouse-box/compare/v2.1.1...v3.0.0) (2026-01-07)
+
+
+* feat(project)!: migrate to Rollup bundler and Lighthouse CLI ([fc6c701](https://github.com/abordage/lighthouse-box/commit/fc6c7016ab89e0d738f18560c98eaa203b8cb67b))
+
+
+### BREAKING CHANGES
+
+* Requires Node.js 24+. The action now uses
+Lighthouse CLI instead of bundled Node API. No changes required
+for users - the action interface remains the same.
+
 ## [2.1.1](https://github.com/abordage/lighthouse-box/compare/v2.1.0...v2.1.1) (2026-01-07)
 
 
