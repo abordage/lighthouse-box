@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import { getInputs, isRunningInGitHubActions } from './config.js';
+import { getInputs, isRunningInGitHubActions, ACTION_VERSION } from './config.js';
 import { runLighthouseAudit } from './lighthouse.js';
 import { generateGistContent, generateGistTitle, updateGist } from './gist.js';
 import { printSummary } from './summary.js';
@@ -22,15 +22,17 @@ async function run(): Promise<void> {
 
   const inputs = getInputs();
 
-  console.log(`Running Lighthouse audit for: ${inputs.testUrl} (${inputs.formFactor})`);
+  console.log(`Lighthouse Box v${ACTION_VERSION}`);
+  console.log(`Target: ${inputs.testUrl} (${inputs.formFactor})\n`);
 
   const result = await runLighthouseAudit(inputs.testUrl, inputs.formFactor);
   const gistContent = generateGistContent(result.metrics, inputs.resultBadge);
   const gistTitle = generateGistTitle(inputs.gistTitle);
 
+  console.log('Updating gist...');
   await updateGist(inputs.ghToken, inputs.gistId, gistTitle, gistContent);
 
-  console.log('Gist updated successfully!');
+  console.log('Done!\n');
 
   await printSummary(result.metrics, result.url, inputs.printSummary);
 }
