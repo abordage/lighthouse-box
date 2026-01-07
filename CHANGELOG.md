@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/abordage/lighthouse-box/compare/v2.1.0...v2.1.1) (2026-01-07)
+
+
+### Bug Fixes
+
+* **build:** disable minification to fix runtime error ([e9021d5](https://github.com/abordage/lighthouse-box/commit/e9021d56e772e1f57313c73dc0084c668aef4df8))
+
 # [2.1.0](https://github.com/abordage/lighthouse-box/compare/v2.0.0...v2.1.0) (2026-01-06)
 
 
