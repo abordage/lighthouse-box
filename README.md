@@ -44,7 +44,7 @@ Automatically update your pinned gist with your site's Lighthouse metrics.
 5. **Create** new **Environment secrets:**
     - `GH_TOKEN`: GitHub token generated earlier
     - `GIST_ID`: your Gist ID
-    - `URL`: your url
+    - `TEST_URL`: URL to run Lighthouse on
 
 It's all. Go to **Actions** > **Lighthouse Metrics** and **Run workflow**. Gist should update and show Lighthouse metrics.
 Next, statistics will be updated automatically every day. Pin this gist on your profile!
@@ -94,7 +94,7 @@ If you have any feedback, comments or suggestions, please feel free to open an i
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/abordage/.github/blob/main/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Credits
 
